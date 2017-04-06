@@ -10,6 +10,14 @@ For debugging purposes, CLI formatted commands can be sent using standard in and
 
 * * *
 
+#### Changes starting from Squeezebox Server 7.7
+
+*   Extended "rescan" with optional singledir parameter.
+*   Added "info total duration ?" query to return the total number of seconds for the library.
+*   Added DD parameter to the "status" query to report total playtime of the current queue.
+
+* * *
+
 #### Changes starting from Squeezebox Server 7.6
 
 *   Added tag 'M' for [songinfo](#0.1_songinfo) to return track musicmagic_mixable value.
@@ -1085,6 +1093,7 @@ Example:
 *   **`[info total artists ?](#0.1_info+total+artists+?)`**
 *   **`[info total albums ?](#0.1_info+total+albums+?)`**
 *   **`[info total songs ?](#0.1_info+total+songs+?)`**
+*   **`[info total duration ?](#0.1_info+total+duration+?)`**
 *   **`[genres](#0.1_genres)`**
 *   **`[artists](#0.1_artists)`**
 *   **`[albums](#0.1_albums)`**
@@ -1103,7 +1112,9 @@ Example:
 
 **`rescan <|playlists|?>`**
 
-The "rescan" command causes Squeezebox Server to rescan the entire music library, reloading the music file information. If "playlists" is indicated ("rescan playlists"), only the playlist directory is rescanned. Issued with a "?", "rescan ?" returns if the Squeezebox Server is currently scanning. Scanning occurs when Squeezebox Server starts and following "rescan" and "[wipecache](#0.1_wipecache)" commands.
+The "rescan" command causes the server to rescan the entire music library, reloading the music file information. If "playlists" is indicated ("rescan playlists"), only the playlist directory is rescanned. If "external" is requested, the rescan will be performed using the external scanner process instead of the in-process scanner. If "full file://some/path" is defined, then only this path will be scanned. Issued with a "?", "rescan ?" returns if the server is currently scanning.
+
+Scanning occurs when Squeezebox Server starts and following "rescan" and "[wipecache](#0.1_wipecache)" commands.
 
 Examples:
 
@@ -1255,7 +1266,7 @@ Examples:
 > Request: "info total albums ?<LF>"  
 > Response: "info total albums 18<LF>"
 
-**`info total songs ?`**
+**`info total songs ?**`
 
 The "info total songs ?" query returns the number of unique songs in the server music database.
 
@@ -1263,6 +1274,15 @@ Examples:
 
 > Request: "info total songs ?<LF>"  
 > Response: "info total songs 18<LF>"
+
+**`info total duration ?**`
+
+The "info total duration ?" query returns the number of seconds playtime in the server music database.
+
+Examples:
+
+Request: "info total duration ?<LF>" 
+Response: "info total duration 66109<LF>"
 
 **`genres <start> <itemsPerResponse> <taggedParameters>`**
 
